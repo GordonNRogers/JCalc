@@ -1,19 +1,19 @@
 .frame
 {
-    width: fit-content; 
-    height:fit-content; 
+    width:        fit-content; 
+    height:       fit-content; 
     border-width: thin; 
-    border-style:inset; 
+    border-style: inset; 
     border-color: black; 
-    padding: 3px; 
-    margin: 10px;
+    padding:      3px; 
+    margin:       10px;
 }
 
 .calcButton
 {
-    width: 30px;
-    padding: 3px;
-    margin:  2px;
+    width:      40px;
+    padding:    3px;
+    margin:     2px;
     text-align: center;
 }
 
@@ -25,4 +25,13 @@
 .calcButton-Function
 {
     background-color: #d3d3d3;
+}
+
+ /* needs to be used on the <td> element */
+.calcDisplay
+{
+    width:        100%;
+    border:     black; 
+    border-style: inset; 
+    border-width: thin;
 }

@@ -17,7 +17,7 @@
     <script src="js/scripts.js"></script>
 </head>
 
-<body style="width: auto;">
+<body style="width: auto; padding: 20px;">
 
     <h2 style="color: blue;">Simple HTML Calculator</h1>
     <p></p>
@@ -26,21 +26,27 @@
         <table >
             <!-- use rowspan attribute to have vertical button the span 2 rows:  https://www.w3schools.com/tags/att_td_rowspan.asp   -->
             <tr>
-                <td style="width: 100%;border: black; border-style: inset; border-width: thin;" colspan="4">
+                <td class="calcDisplay" colspan="4" >
                     <label id=lblValue></label>
                 </td>
+            </tr>
+            <tr>
+                <td><button id="btnPower" class="calcButton calcButton-Function" >y^x</button></td>
+                <td><button id="btnSquared" class="calcButton calcButton-Function" >x^2</button></td>
+                <td><button id="btnClearError" class="calcButton calcButton-Function" >CE</button></td>
+                <td><button id="btnClear" class="calcButton calcButton-Function" >C</button></td>
             </tr>
             <tr>
                 <td><button id="btnRecall" class="calcButton calcButton-Function" >M</button></td>
                 <td><button id="btnAddMemory" class="calcButton calcButton-Function" >+M</button></td>
                 <td><button id="btnRemoveMemory" class="calcButton calcButton-Function" >-M</button></td>
-                <td><button id="btnClear" class="calcButton calcButton-Function" >C</button></td>
+                <td><button id="btnMult" class="calcButton calcButton-Function" >*</button></td>
             </tr>
             <tr>
                 <td><button id="btn7" class="calcButton calcButton-Number" >7</button></td>
                 <td><button id="btn8" class="calcButton calcButton-Number" >8</button></td>
                 <td><button id="btn9" class="calcButton calcButton-Number" >9</button></td>
-                <td><button id="btnPercent" class="calcButton calcButton-Function" >%</button></td>
+                <td><button id="btnDiv" class="calcButton calcButton-Function" >/</button></td>
             </tr>
             <tr>
                 <td><button id="btn4" class="calcButton calcButton-Number" >4</button></td>

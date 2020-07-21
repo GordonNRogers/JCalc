@@ -8,3 +8,21 @@
     padding: 3px; 
     margin: 10px;
 }
+
+.calcButton
+{
+    width: 30px;
+    padding: 3px;
+    margin:  2px;
+    text-align: center;
+}
+
+.calcButton-Number
+{
+    background-color: rgb(215, 222ffffff, 228);
+}
+
+.calcButton-Function
+{
+    background-color: #d3d3d3;
+}

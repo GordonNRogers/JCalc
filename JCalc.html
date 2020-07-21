@@ -24,20 +24,41 @@
 
     <div class="frame">
         <table >
+            <!-- use rowspan attribute to have vertical button the span 2 rows:  https://www.w3schools.com/tags/att_td_rowspan.asp   -->
             <tr>
-                <td><button id="btn7">7</button></td>
-                <td><button id="btn8">8</button></td>
-                <td><button id="btn9">9</button></td>
+                <td style="width: 100%;border: black; border-style: inset; border-width: thin;" colspan="4">
+                    <label id=lblValue></label>
+                </td>
             </tr>
             <tr>
-                <td><button id="btn4">4</button></td>
-                <td><button id="btn5">5</button></td>
-                <td><button id="btn3">6</button></td>
+                <td><button id="btnRecall" class="calcButton calcButton-Function" >M</button></td>
+                <td><button id="btnAddMemory" class="calcButton calcButton-Function" >+M</button></td>
+                <td><button id="btnRemoveMemory" class="calcButton calcButton-Function" >-M</button></td>
+                <td><button id="btnClear" class="calcButton calcButton-Function" >C</button></td>
             </tr>
             <tr>
-                <td><button id="btn1">1</button></td>
-                <td><button id="btn2">2</button></td>
-                <td><button id="btn3">3</button></td>
+                <td><button id="btn7" class="calcButton calcButton-Number" >7</button></td>
+                <td><button id="btn8" class="calcButton calcButton-Number" >8</button></td>
+                <td><button id="btn9" class="calcButton calcButton-Number" >9</button></td>
+                <td><button id="btnPercent" class="calcButton calcButton-Function" >%</button></td>
+            </tr>
+            <tr>
+                <td><button id="btn4" class="calcButton calcButton-Number" >4</button></td>
+                <td><button id="btn5" class="calcButton calcButton-Number" >5</button></td>
+                <td><button id="btn3" class="calcButton calcButton-Number" >6</button></td>
+                <td><button id="btnSubtract" class="calcButton calcButton-Function" >-</button></td>
+            </tr>
+            <tr>
+                <td><button id="btn1" class="calcButton calcButton-Number" >1</button></td>
+                <td><button id="btn2" class="calcButton calcButton-Number" >2</button></td>
+                <td><button id="btn3" class="calcButton calcButton-Number" >3</button></td>
+                <td><button id="btnAdd" class="calcButton calcButton-Function" >+</button></td>
+            </tr>
+            <tr>
+                <td><button id="btn1" class="calcButton calcButton-Number" >+/-</button></td>
+                <td><button id="btn2" class="calcButton calcButton-Number" >0</button></td>
+                <td><button id="btn3" class="calcButton calcButton-Number" >.</button></td>
+                <td><button id="btnEquals" class="calcButton calcButton-Function" >=</button></td>
             </tr>
         </table>
     </div>

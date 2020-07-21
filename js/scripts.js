@@ -4,10 +4,12 @@ let memory = 0;
 
 let displayText = '';
 let currentDisplayValue = 0;
+let currentDisplayNagative = false;
 
 let operand1 = 0;
 let operand2 = 0;
 let pendingCommand = '';
+
 
 // {operand1} --> {command} --> {operand2) --> {equals} --> {operand1 cmd operand2} --> {display}
 
@@ -26,12 +28,18 @@ let pendingCommand = '';
 
  function processNumber(num)
  {
-    alert("Process Number: " + num);
+    //alert("Process Number: " + num);
+    // TODO:  add fractional numbers is the decimal button has been pushed
+    currentDisplayValue = (currentDisplayValue*10) + (currentDisplayNagative ? (num * -1) : num);
+    updateDisplay();
  }
 
 function updateDisplay()
 {
-
+    // use jquery to get the display label by ID and set the text
+    var displayText = currentDisplayValue.toString();
+    //alert("Update Display:" + displayText);
+    $("#lblValue").text(displayText);
 }
 
 function processCommand(cmd)

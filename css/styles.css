@@ -1,0 +1,10 @@
+.frame
+{
+    width: fit-content; 
+    height:fit-content; 
+    border-width: thin; 
+    border-style:inset; 
+    border-color: black; 
+    padding: 3px; 
+    margin: 10px;
+}

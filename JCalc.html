@@ -31,40 +31,40 @@
                 </td>
             </tr>
             <tr>
-                <td><button id="btnPower" class="calcButton calcButton-Function" >y^x</button></td>
-                <td><button id="btnSquared" class="calcButton calcButton-Function" >x^2</button></td>
-                <td><button id="btnClearError" class="calcButton calcButton-Function" >CE</button></td>
-                <td><button id="btnClear" class="calcButton calcButton-Function" >C</button></td>
+                <td><button id="btnPower" class="calcButton calcButton-Function" onclick="onClickButton('x^y')">x^y</button></td>
+                <td><button id="btnSquared" class="calcButton calcButton-Function" onclick="onClickButton('x^2')">x^2</button></td>
+                <td><button id="btnClearError" class="calcButton calcButton-Function" onclick="onClickButton('CE')">CE</button></td>
+                <td><button id="btnClear" class="calcButton calcButton-Function" onclick="onClickButton('C')">C</button></td>
             </tr>
             <tr>
-                <td><button id="btnRecall" class="calcButton calcButton-Function" >M</button></td>
-                <td><button id="btnAddMemory" class="calcButton calcButton-Function" >+M</button></td>
-                <td><button id="btnRemoveMemory" class="calcButton calcButton-Function" >-M</button></td>
-                <td><button id="btnMult" class="calcButton calcButton-Function" >*</button></td>
+                <td><button id="btnRecall" class="calcButton calcButton-Function" onclick="onClickButton('M')">M</button></td>
+                <td><button id="btnAddMemory" class="calcButton calcButton-Function" onclick="onClickButton('+M')">+M</button></td>
+                <td><button id="btnRemoveMemory" class="calcButton calcButton-Function" onclick="onClickButton('-M')">-M</button></td>
+                <td><button id="btnMult" class="calcButton calcButton-Function" onclick="onClickButton('*')">*</button></td>
             </tr>
             <tr>
-                <td><button id="btn7" class="calcButton calcButton-Number" >7</button></td>
-                <td><button id="btn8" class="calcButton calcButton-Number" >8</button></td>
-                <td><button id="btn9" class="calcButton calcButton-Number" >9</button></td>
-                <td><button id="btnDiv" class="calcButton calcButton-Function" >/</button></td>
+                <td><button id="btn7" class="calcButton calcButton-Number" onclick="onClickButton(7)">7</button></td>
+                <td><button id="btn8" class="calcButton calcButton-Number" onclick="onClickButton(8)">8</button></td>
+                <td><button id="btn9" class="calcButton calcButton-Number" onclick="onClickButton(9)">9</button></td>
+                <td><button id="btnDiv" class="calcButton calcButton-Function" onclick="onClickButton('/')">/</button></td>
             </tr>
             <tr>
-                <td><button id="btn4" class="calcButton calcButton-Number" >4</button></td>
-                <td><button id="btn5" class="calcButton calcButton-Number" >5</button></td>
-                <td><button id="btn3" class="calcButton calcButton-Number" >6</button></td>
-                <td><button id="btnSubtract" class="calcButton calcButton-Function" >-</button></td>
+                <td><button id="btn4" class="calcButton calcButton-Number" onclick="onClickButton(4)">4</button></td>
+                <td><button id="btn5" class="calcButton calcButton-Number" onclick="onClickButton(5)">5</button></td>
+                <td><button id="btn3" class="calcButton calcButton-Number" onclick="onClickButton(6)">6</button></td>
+                <td><button id="btnSubtract" class="calcButton calcButton-Function" onclick="onClickButton('-')">-</button></td>
             </tr>
             <tr>
-                <td><button id="btn1" class="calcButton calcButton-Number" >1</button></td>
-                <td><button id="btn2" class="calcButton calcButton-Number" >2</button></td>
-                <td><button id="btn3" class="calcButton calcButton-Number" >3</button></td>
-                <td><button id="btnAdd" class="calcButton calcButton-Function" >+</button></td>
+                <td><button id="btn1" class="calcButton calcButton-Number" onclick="onClickButton(1)">1</button></td>
+                <td><button id="btn2" class="calcButton calcButton-Number" onclick="onClickButton(2)">2</button></td>
+                <td><button id="btn3" class="calcButton calcButton-Number" onclick="onClickButton(3)">3</button></td>
+                <td><button id="btnAdd" class="calcButton calcButton-Function" onclick="onClickButton('+')" >+</button></td>
             </tr>
             <tr>
-                <td><button id="btn1" class="calcButton calcButton-Number" >+/-</button></td>
-                <td><button id="btn2" class="calcButton calcButton-Number" >0</button></td>
-                <td><button id="btn3" class="calcButton calcButton-Number" >.</button></td>
-                <td><button id="btnEquals" class="calcButton calcButton-Function" >=</button></td>
+                <td><button id="btn1" class="calcButton calcButton-Number" onclick="onClickButton('+/-')" >+/-</button></td>
+                <td><button id="btn2" class="calcButton calcButton-Number" onclick="onClickButton(0)"      >0</button></td>
+                <td><button id="btn3" class="calcButton calcButton-Number" onclick="onClickButton('.')"     >.</button></td>
+                <td><button id="btnEquals" class="calcButton calcButton-Function" onclick="onClickButton('=')" >=</button></td>
             </tr>
         </table>
     </div>

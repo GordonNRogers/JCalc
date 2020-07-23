@@ -1,0 +1,9 @@
+x Fix visual issue where the height of the display row changes when it goes from empty to containing text.
+x Add replace M with MS/MR
+x Add a backspace button???
+
+- add code to handle MS/MR/M+/M-, <-
+- Investigate using BCD or some other encoding/number handling to eliminate floating-point errors
+- Define what happens if you press two commands consecutively (ie. "+*").
+       It's not a valid operation, so maybe treat is a a clear or show "Error"
+- Round the corners of the buttons, maybe the frame.

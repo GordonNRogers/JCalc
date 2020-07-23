@@ -24,22 +24,30 @@
 
     <div class="frame">
         <table >
-            <!-- use rowspan attribute to have vertical button the span 2 rows:  https://www.w3schools.com/tags/att_td_rowspan.asp   -->
-            <tr>
+            <!-- use colspan / rowspan attributes to span mulktiple grid sections:  https://www.w3schools.com/tags/att_td_rowspan.asp   -->
+            <tr >
                 <td class="calcDisplay" colspan="4" >
-                    <label id="lblValue"></label>
+                    <label id="lblValue" ></label>
                 </td>
             </tr>
-            <tr>
-                <td><button id="btnPower" class="calcButton calcButton-Function" onclick="onClickButton('x^y')">x^y</button></td>
-                <td><button id="btnSquared" class="calcButton calcButton-Function" onclick="onClickButton('x^2')">x^2</button></td>
-                <td><button id="btnClearError" class="calcButton calcButton-Function" onclick="onClickButton('CE')">CE</button></td>
-                <td><button id="btnClear" class="calcButton calcButton-Function" onclick="onClickButton('C')">C</button></td>
-            </tr>
-            <tr>
-                <td><button id="btnRecall" class="calcButton calcButton-Function" onclick="onClickButton('M')">M</button></td>
+                <!--
+                <tr>
+                    <td><button id="btnPower" class="calcButton calcButton-Function" onclick="onClickButton('x^y')">x^y</button></td>
+                    <td><button id="btnSquared" class="calcButton calcButton-Function" onclick="onClickButton('x^2')">x^2</button></td>
+                    .....
+                    .....
+                </tr>
+                -->
+                <tr>
+                <td><button id="btnMemStore" class="calcButton calcButton-Function" onclick="onClickButton('MS')">MS</button></td>
+                <td><button id="btnMemRecall" class="calcButton calcButton-Function" onclick="onClickButton('MR')">MR</button></td>
                 <td><button id="btnAddMemory" class="calcButton calcButton-Function" onclick="onClickButton('+M')">+M</button></td>
                 <td><button id="btnRemoveMemory" class="calcButton calcButton-Function" onclick="onClickButton('-M')">-M</button></td>
+            </tr>
+            <tr>
+                <td><button id="btnClearError" class="calcButton calcButton-Function" onclick="onClickButton('CE')">CE</button></td>
+                <td><button id="btnClear" class="calcButton calcButton-Function" onclick="onClickButton('C')">C</button></td>
+                <td><button id="btnBackspace" class="calcButton calcButton-Function" onclick="onClickButton('<-')"><-</button></td>
                 <td><button id="btnMult" class="calcButton calcButton-Function" onclick="onClickButton('*')">*</button></td>
             </tr>
             <tr>
@@ -52,13 +60,13 @@
                 <td><button id="btn4" class="calcButton calcButton-Number" onclick="onClickButton(4)">4</button></td>
                 <td><button id="btn5" class="calcButton calcButton-Number" onclick="onClickButton(5)">5</button></td>
                 <td><button id="btn3" class="calcButton calcButton-Number" onclick="onClickButton(6)">6</button></td>
-                <td><button id="btnSubtract" class="calcButton calcButton-Function" onclick="onClickButton('-')">-</button></td>
+                <td><button id="btnAdd" class="calcButton calcButton-Function" onclick="onClickButton('+')" >+</button></td>
             </tr>
             <tr>
                 <td><button id="btn1" class="calcButton calcButton-Number" onclick="onClickButton(1)">1</button></td>
                 <td><button id="btn2" class="calcButton calcButton-Number" onclick="onClickButton(2)">2</button></td>
                 <td><button id="btn3" class="calcButton calcButton-Number" onclick="onClickButton(3)">3</button></td>
-                <td><button id="btnAdd" class="calcButton calcButton-Function" onclick="onClickButton('+')" >+</button></td>
+                <td><button id="btnSubtract" class="calcButton calcButton-Function" onclick="onClickButton('-')">-</button></td>
             </tr>
             <tr>
                 <td><button id="btn1" class="calcButton calcButton-Number" onclick="onClickButton('+/-')" >+/-</button></td>

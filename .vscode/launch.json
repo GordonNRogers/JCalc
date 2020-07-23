@@ -6,6 +6,7 @@
     "configurations": [
         {
             // https://stackoverflow.com/questions/30039512/how-to-view-an-html-file-in-the-browser-with-visual-studio-code
+            // or, could use NodeJS:  https://nodejs.org/en/docs/guides/getting-started-guide/
             "name": "Launch Chrome",
             "request": "launch",
             "type": "pwa-chrome",

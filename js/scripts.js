@@ -7,7 +7,7 @@ let isMemoryShown = false;
 // vars for the display
 let displayText = '';
 let currentDisplayNagative = false;
-let lastButtonPushWasCommand = false;
+let lastButtonPushWasCommand = false;  // there are some cases when we need to know this, so keep track
 
 // vars used to complete an operation
 let operand1 = 0;
@@ -16,7 +16,6 @@ let pendingCommand = '';
 
 
 // {operand1} --> {command} --> {operand2) --> {equals} --> {do operation, display}
-// TODO:  add a backspace button???
 
 // NOTE:  By convention, the values that are passed in from the HTML elements are numbers
 // for number keys and strings for commands.
@@ -25,12 +24,10 @@ let pendingCommand = '';
     if(typeof(val)=='number')
     {
         processNumber(val);
-        lastButtonPushWasCommand = false;
     }
     else
     {
         processCommand(val);
-        lastButtonPushWasCommand = true;
     }
     updateDisplay();
  }
@@ -43,11 +40,31 @@ let pendingCommand = '';
     // clear the display and start adding numbers.
     if(lastButtonPushWasCommand || isMemoryShown)
     {
-        processClear();            
+        doClear();            
     }
 
     displayText = displayText + num;
- }
+
+    lastButtonPushWasCommand = false;
+}
+
+function doClear()
+{
+    //console.log("processClear");
+    displayText = '';
+    isMemoryShown = false;
+}
+
+function doClearEverything()
+{
+    //console.log("processClearEverything");
+    memmory = 0;
+    displayText = '';
+    isMemoryShown = false;
+    operand1 = 0;
+    operand2 = 0;
+    pendingCommand = '';
+}
 
 function updateDisplay()
 {
@@ -65,55 +82,87 @@ function updateDisplay()
 
 function processCommand(cmd)
 {
-    // TODO:  define what happens if you press two commands consecutively (ie. "+*")
-    // it's not a valid operation, so maybe treat is a a clear or show "Error"
-
     switch(cmd)
     {
         case '=':
-            processEquals();
+            // process the pending operation and show the result
+            // pressing number keys should result in a new value appearing in the display with no pending command,
+            // which the default handling already does.  Just call it.
+            processPendingCommand();
+            lastButtonPushWasCommand = true;
             break;
         case '+':
-            processPlus();
+            processPendingCommand();
+            pendingCommand = '+';
+            lastButtonPushWasCommand = true;
             break;
         case '-':
-            processMinus();
+            processPendingCommand();
+            pendingCommand = '-';
+            lastButtonPushWasCommand = true;
             break;
         case '*':
-            processTimes();
+            processPendingCommand();
+            pendingCommand = '*';
+            lastButtonPushWasCommand = true;
             break;
         case '/':
-            processDivide();
+            processPendingCommand();
+            pendingCommand = '/';
+            lastButtonPushWasCommand = true;
             break;
         case '.':
-            processDecimal();
+            if( !displayText.includes('.') )
+            {
+                displayText = displayText + '.';
+            }
+            lastButtonPushWasCommand = false;  // this one if different...it's a command that modifies a number
             break;
         case '+/-':
-            processSign();
-            break;
-        case 'M':
-            processMemoryRecall();
-            break;
-        case 'M+':
-            processMemoryAdd();
-            break;
-        case 'M-':
-            processMemorySubtract();
+            displayText = (Number(displayText) * -1).toString();
+            lastButtonPushWasCommand = false;  // this one if different...it's a command that modifies a number
             break;
         case 'C':
-            processClear();
+            doClear();
+            lastButtonPushWasCommand = true;
             break;
         case 'CE':
-            processClearEverything();
+            doClearEverything();
+            lastButtonPushWasCommand = true;
             break;
+        case 'MS':
+            alert("Unknown command: " + cmd);
+            lastButtonPushWasCommand = true;
+            break;
+        case 'MR':
+            alert("Unknown command: " + cmd);
+            lastButtonPushWasCommand = true;
+            break;
+        case 'M+':
+            alert("Unknown command: " + cmd);
+            lastButtonPushWasCommand = true;
+            break;
+        case 'M-':
+            alert("Unknown command: " + cmd);
+            lastButtonPushWasCommand = true;
+            break;
+        case '<-':
+            alert("Unknown command: " + cmd);
+            lastButtonPushWasCommand = true;
+            break;
+                /*
         case 'x^2':
-            processSquared();
+            alert("Unknown command: " + cmd);
+            lastButtonPushWasCommand = true;
             break;
         case 'x^y':
-            processPower();
+            alert("Unknown command: " + cmd);
+            lastButtonPushWasCommand = true;
             break;
+            */
         default:
             alert("Unknown command: " + cmd);
+            lastButtonPushWasCommand = true;
             break;
     }
  }
@@ -143,7 +192,7 @@ function processPendingCommand()
 
     switch(pendingCommand)
     {
-        case '':  // no command, just set up for the next one
+        case '':  // no command to process, so just set up for the next one
             operand1 = operand2;
             displayText = '';
             pendingCommand = '';
@@ -164,12 +213,11 @@ function processPendingCommand()
             operationCompleted = true;
             break;
         case '/':
-            if( operand2==0 )
+            if( operand2==0 )  // handle divide by zero
             {
                 displayText = 'Error';
                 pendingCommand = '';
                 operand2 = 0;
-                break;
             }
             else
             {
@@ -177,6 +225,43 @@ function processPendingCommand()
                 operationCompleted = true;
             }
             break;
+        case 'MS':
+            alert('unknown pendingCommand: ' + pendingCommand);
+            //operand1 = operand1 * operand2;
+            operationCompleted = true;
+            break;
+        case 'MR':
+            alert('unknown pendingCommand: ' + pendingCommand);
+            //operand1 = operand1 * operand2;
+            operationCompleted = true;
+            break;
+        case 'M+':
+            alert('unknown pendingCommand: ' + pendingCommand);
+            //operand1 = operand1 * operand2;
+            operationCompleted = true;
+            break;
+        case 'M-':
+            alert('unknown pendingCommand: ' + pendingCommand);
+            //operand1 = operand1 * operand2;
+            operationCompleted = true;
+            break;
+        case '<-':
+            alert('unknown pendingCommand: ' + pendingCommand);
+            //operand1 = operand1 * operand2;
+            operationCompleted = true;
+            break;
+            /*
+        case 'x^2':
+            alert('unknown pendingCommand: ' + pendingCommand);
+            //operand1 = operand1 * operand2;
+            operationCompleted = true;
+            break;
+        case 'x^y':
+            alert('unknown pendingCommand: ' + pendingCommand);
+            //operand1 = operand1 * operand2;
+            operationCompleted = true;
+            break;
+            */
         default:
             alert('unknown pendingCommand: ' + pendingCommand);
             break;
@@ -193,101 +278,4 @@ function processPendingCommand()
     }
 }
 
-function processEquals()
-{
-    //console.log("processEquals");
-
-    // process the pending operation and show the result
-    // pressing number keys should result in a new value appearing in the display with no pending command,
-    // which the default handling already does.  Just call it.
-    processPendingCommand();
-}
-
-function processPlus()
-{
-    //console.log("processPlus");
-    processPendingCommand();
-    pendingCommand = '+';
-}
-
-function processMinus()
-{
-    //console.log("processMinus");
-    processPendingCommand();
-    pendingCommand = '+';
-}
-
-function processTimes()
-{
-    //console.log("processTimes");
-    processPendingCommand();
-    pendingCommand = '*';
-}
-
-function processDivide()
-{
-    //console.log("processDivide");
-    processPendingCommand();
-    pendingCommand = '/';
-}
-
-function processDecimal()
-{
-    //console.log("processDecimal");
-    // add a decimal point at the end, but only if we don't already have one
-    if( !displayText.includes('.') )
-    {
-        displayText = displayText + '.';
-    }
-}
-
-function processSign()
-{
-    //console.log("processSign");
-    displayText = (Number(displayText) * -1).toString();
-}
-
-function processMemoryRecall()
-{
-    console.log("processMemoryRecall");
-    //isMemoryShown = true;
-}
-
-function processMemoryAdd()
-{
-    console.log("processMemoryAdd");
-}
-
-function processMemorySubtract()
-{
-    console.log("processMemorySubtract");
-}
-
-function processClear()
-{
-    //console.log("processClear");
-    displayText = '';
-    isMemoryShown = false;
-}
-
-function processClearEverything()
-{
-    //console.log("processClearEverything");
-    memmory = 0;
-    displayText = '';
-    isMemoryShown = false;
-    operand1 = 0;
-    operand2 = 0;
-    pendingCommand = '';
-}
-
-function processSquared()
-{
-    console.log("processSquared");
-}
-
-function processPower()
-{
-    console.log("processPower");
-}
 

@@ -10,7 +10,6 @@ function assert(condition, message)
     if(condition==false)
     {
         alert('condition failed:' + message);
-        // TODO: stop executing scripts
         throw 'Assert failed';
     }
 }

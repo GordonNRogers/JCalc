@@ -110,7 +110,42 @@ function runUnitTests()
     onClickButton('M+');
     onClickButton('MR');
     assert(displayText=='139', 'test5D');
+    onClickButton('CE');
+    assert(displayText=='', 'test5E');
+    assert(memory==0, 'test5F');
 
+    // unit tests for power functions
+    onClickButton('CE');
+    onClickButton(2);
+    onClickButton('x^2');
+    assert(displayText=='4', 'test6A');
+    onClickButton('x^y');
+    onClickButton(3);
+    onClickButton('=');
+    assert(displayText=='64', 'test6B');
+ 
+    // unit tests for invert function
+    onClickButton('CE');
+    onClickButton(1);
+    onClickButton(0);
+    onClickButton('1/x');
+    assert(displayText=='0.1', 'test7A');
+    // try adding something to it
+    onClickButton('+');
+    onClickButton(5);
+    onClickButton('=');
+    assert(displayText=='5.1', 'test7B');
+
+    onClickButton('CE');
+    onClickButton(1);
+    onClickButton(0);
+    onClickButton(0);
+    onClickButton('%');
+    assert(displayText=='1', 'test8A');
+    onClickButton(7);
+    onClickButton(7);
+    onClickButton('%');
+    assert(displayText=='0.77', 'test8B');
 
 
     // clear everything when done

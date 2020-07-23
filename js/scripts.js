@@ -14,8 +14,6 @@ let operand2 = 0;
 let pendingCommand = '';
 
 
-// {operand1} --> {command} --> {operand2) --> {equals} --> {do operation, display}
-
 // NOTE:  By convention, the values that are passed in from the HTML elements are numbers
 // for number keys and strings for commands.
  function onClickButton(val)
@@ -85,22 +83,22 @@ function processCommand(cmd)
             break;
         case '+':
             processPendingCommand();
-            pendingCommand = '+';
+            pendingCommand = cmd;
             lastButtonPushWasCommand = true;
             break;
         case '-':
             processPendingCommand();
-            pendingCommand = '-';
+            pendingCommand = cmd;
             lastButtonPushWasCommand = true;
             break;
         case '*':
             processPendingCommand();
-            pendingCommand = '*';
+            pendingCommand = cmd;
             lastButtonPushWasCommand = true;
             break;
         case '/':
             processPendingCommand();
-            pendingCommand = '/';
+            pendingCommand = cmd;
             lastButtonPushWasCommand = true;
             break;
         case '.':
@@ -147,23 +145,26 @@ function processCommand(cmd)
             lastButtonPushWasCommand = false;
             break;
         case 'x^2':
-            alert("Unknown command: " + cmd);
+            processPendingCommand();
+            operand1 = Number(displayText);
+            operand2 = 2;
+            pendingCommand = 'x^y';
             processPendingCommand();
             lastButtonPushWasCommand = true;
             break;
         case 'x^y':
-            alert("Unknown command: " + cmd);
             processPendingCommand();
+            pendingCommand = cmd;
             lastButtonPushWasCommand = true;
             break;
         case '1/x':
-            alert("Unknown command: " + cmd);
             processPendingCommand();
+            displayText = (1 / Number(displayText)).toString();
             lastButtonPushWasCommand = true;
             break;
         case '%':
-            alert("Unknown command: " + cmd);
             processPendingCommand();
+            displayText = (Number(displayText) / 100 ).toString();
             lastButtonPushWasCommand = true;
             break;
         default:
@@ -236,8 +237,7 @@ function processPendingCommand()
             }
             break;
         case 'x^y':
-            alert('unknown pendingCommand: ' + pendingCommand);
-            //operand1 = operand1 * operand2;
+            operand1 = Math.pow(operand1,operand2);
             operationCompleted = true;
             break;
         default:

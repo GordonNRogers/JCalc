@@ -147,8 +147,9 @@ function processCommand(cmd)
             lastButtonPushWasCommand = true;
             break;
         case '<-':
-            alert("Unknown command: " + cmd);
-            lastButtonPushWasCommand = true;
+            let newText = displayText.slice(0, displayText.length-1);
+            displayText = newText;
+            lastButtonPushWasCommand = false;
             break;
         case 'x^2':
             alert("Unknown command: " + cmd);
@@ -206,7 +207,7 @@ function processPendingCommand()
             break;
         case '+':
             // BUG:  12.3 + .4 -->  12.700000000000001
-            // floating point error  --> maybe numbers should be handled in BCD?
+            // floating point error  --> maybe numbers should be handled in BCD, or multiply by 10's to get rid of decimals, do the math and dived by same factor.
             operand1 = operand1 + operand2;
             operationCompleted = true;
             break;
@@ -230,11 +231,6 @@ function processPendingCommand()
                 operand1 = operand1 / operand2;
                 operationCompleted = true;
             }
-            break;
-        case '<-':
-            alert('unknown pendingCommand: ' + pendingCommand);
-            //operand1 = operand1 * operand2;
-            operationCompleted = true;
             break;
         case 'x^2':
             alert('unknown pendingCommand: ' + pendingCommand);

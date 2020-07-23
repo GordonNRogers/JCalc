@@ -91,6 +91,29 @@ function runUnitTests()
     onClickButton('=');
     assert(displayText=='Error', 'test4C');
 
+
+    // unit tests for memory buttons
+    onClickButton('CE');
+    onClickButton(6);
+    onClickButton(4);
+    onClickButton('MS');
+    assert(memory==64, 'test5A');
+    onClickButton('C');
+    onClickButton('MR');
+    assert(displayText=='64', 'test5B');
+    onClickButton(1);
+    onClickButton(0);
+    onClickButton('M-');
+    assert(memory=='54', 'test5C');
+    onClickButton(8);
+    onClickButton(5);
+    onClickButton('M+');
+    onClickButton('MR');
+    assert(displayText=='139', 'test5D');
+
+
+
+    // clear everything when done
     onClickButton('CE');
 }
 

@@ -1,8 +1,7 @@
 "use strict";
 
 // vars for memory function
-let memmory = 0;
-let isMemoryShown = false;
+let memory = 0;
 
 // vars for the display
 let displayText = '';
@@ -38,7 +37,7 @@ let pendingCommand = '';
 
     // If the last button pushed was a command and now we have a number being pushed, 
     // clear the display and start adding numbers.
-    if(lastButtonPushWasCommand || isMemoryShown)
+    if(lastButtonPushWasCommand)
     {
         doClear();            
     }
@@ -52,15 +51,13 @@ function doClear()
 {
     //console.log("processClear");
     displayText = '';
-    isMemoryShown = false;
 }
 
 function doClearEverything()
 {
     //console.log("processClearEverything");
-    memmory = 0;
+    memory = 0;
     displayText = '';
-    isMemoryShown = false;
     operand1 = 0;
     operand2 = 0;
     pendingCommand = '';
@@ -70,11 +67,6 @@ function updateDisplay()
 {
     //console.log("Update Display:" + displayText);
     let labelText = displayText;
-
-    if(isMemoryShown)
-    {
-        labelText = labelText + '[M]'
-    }
 
     // use jquery to get the display label by ID and set the text
     $("#lblValue").text(labelText);
@@ -132,21 +124,21 @@ function processCommand(cmd)
             break;
         case 'MS':
             processPendingCommand();
-            memmory = Number(displayText);
+            memory = Number(displayText);
             lastButtonPushWasCommand = true;
             break;
         case 'MR':
-            displayText = memmory.toString();
+            displayText = memory.toString();
             lastButtonPushWasCommand = true;
             break;
         case 'M+':
             processPendingCommand();
-            memmory += Number(displayText);
+            memory += Number(displayText);
             lastButtonPushWasCommand = true;
             break;
         case 'M-':
             processPendingCommand();
-            memmory -= Number(displayText);
+            memory -= Number(displayText);
             lastButtonPushWasCommand = true;
             break;
         case '<-':
@@ -213,9 +205,8 @@ function processPendingCommand()
     {
         case '':  // no command to process, so just set up for the next one
             operand1 = operand2;
-            displayText = '';
-            pendingCommand = '';
             operand2 = 0;
+            pendingCommand = '';
             break;
         case '+':
             // BUG:  12.3 + .4 -->  12.700000000000001

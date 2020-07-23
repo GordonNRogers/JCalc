@@ -131,6 +131,7 @@ function processCommand(cmd)
             lastButtonPushWasCommand = true;
             break;
         case 'MS':
+            processPendingCommand();
             memmory = Number(displayText);
             lastButtonPushWasCommand = true;
             break;
@@ -139,10 +140,12 @@ function processCommand(cmd)
             lastButtonPushWasCommand = true;
             break;
         case 'M+':
+            processPendingCommand();
             memmory += Number(displayText);
             lastButtonPushWasCommand = true;
             break;
         case 'M-':
+            processPendingCommand();
             memmory -= Number(displayText);
             lastButtonPushWasCommand = true;
             break;
@@ -153,18 +156,22 @@ function processCommand(cmd)
             break;
         case 'x^2':
             alert("Unknown command: " + cmd);
+            processPendingCommand();
             lastButtonPushWasCommand = true;
             break;
         case 'x^y':
             alert("Unknown command: " + cmd);
+            processPendingCommand();
             lastButtonPushWasCommand = true;
             break;
         case '1/x':
             alert("Unknown command: " + cmd);
+            processPendingCommand();
             lastButtonPushWasCommand = true;
             break;
         case '%':
             alert("Unknown command: " + cmd);
+            processPendingCommand();
             lastButtonPushWasCommand = true;
             break;
         default:
@@ -176,6 +183,11 @@ function processCommand(cmd)
 
 function processPendingCommand()
 {
+    // This method handles commands that take two operands, like +-*/, x^y, etc.
+    // Enter operand1, press the command button to set the pending command,
+    // enter operand2, then press another command.  The first thing done is to evaluate
+    // the pending operation before either performing the next operation or making pending.
+
     // sinple case:
     // 2 + 6 =  --> 8, pressing a number key clears the result
     // hit 2, displays 2 on the screen
@@ -232,22 +244,7 @@ function processPendingCommand()
                 operationCompleted = true;
             }
             break;
-        case 'x^2':
-            alert('unknown pendingCommand: ' + pendingCommand);
-            //operand1 = operand1 * operand2;
-            operationCompleted = true;
-            break;
         case 'x^y':
-            alert('unknown pendingCommand: ' + pendingCommand);
-            //operand1 = operand1 * operand2;
-            operationCompleted = true;
-            break;
-        case '1/x':
-            alert('unknown pendingCommand: ' + pendingCommand);
-            //operand1 = operand1 * operand2;
-            operationCompleted = true;
-            break;
-        case '%':
             alert('unknown pendingCommand: ' + pendingCommand);
             //operand1 = operand1 * operand2;
             operationCompleted = true;

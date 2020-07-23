@@ -131,19 +131,19 @@ function processCommand(cmd)
             lastButtonPushWasCommand = true;
             break;
         case 'MS':
-            alert("Unknown command: " + cmd);
+            memmory = Number(displayText);
             lastButtonPushWasCommand = true;
             break;
         case 'MR':
-            alert("Unknown command: " + cmd);
+            displayText = memmory.toString();
             lastButtonPushWasCommand = true;
             break;
         case 'M+':
-            alert("Unknown command: " + cmd);
+            memmory += Number(displayText);
             lastButtonPushWasCommand = true;
             break;
         case 'M-':
-            alert("Unknown command: " + cmd);
+            memmory -= Number(displayText);
             lastButtonPushWasCommand = true;
             break;
         case '<-':
@@ -230,26 +230,6 @@ function processPendingCommand()
                 operand1 = operand1 / operand2;
                 operationCompleted = true;
             }
-            break;
-        case 'MS':
-            alert('unknown pendingCommand: ' + pendingCommand);
-            //operand1 = operand1 * operand2;
-            operationCompleted = true;
-            break;
-        case 'MR':
-            alert('unknown pendingCommand: ' + pendingCommand);
-            //operand1 = operand1 * operand2;
-            operationCompleted = true;
-            break;
-        case 'M+':
-            alert('unknown pendingCommand: ' + pendingCommand);
-            //operand1 = operand1 * operand2;
-            operationCompleted = true;
-            break;
-        case 'M-':
-            alert('unknown pendingCommand: ' + pendingCommand);
-            //operand1 = operand1 * operand2;
-            operationCompleted = true;
             break;
         case '<-':
             alert('unknown pendingCommand: ' + pendingCommand);

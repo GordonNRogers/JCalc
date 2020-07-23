@@ -150,7 +150,6 @@ function processCommand(cmd)
             alert("Unknown command: " + cmd);
             lastButtonPushWasCommand = true;
             break;
-                /*
         case 'x^2':
             alert("Unknown command: " + cmd);
             lastButtonPushWasCommand = true;
@@ -159,7 +158,14 @@ function processCommand(cmd)
             alert("Unknown command: " + cmd);
             lastButtonPushWasCommand = true;
             break;
-            */
+        case '1/x':
+            alert("Unknown command: " + cmd);
+            lastButtonPushWasCommand = true;
+            break;
+        case '%':
+            alert("Unknown command: " + cmd);
+            lastButtonPushWasCommand = true;
+            break;
         default:
             alert("Unknown command: " + cmd);
             lastButtonPushWasCommand = true;
@@ -250,7 +256,6 @@ function processPendingCommand()
             //operand1 = operand1 * operand2;
             operationCompleted = true;
             break;
-            /*
         case 'x^2':
             alert('unknown pendingCommand: ' + pendingCommand);
             //operand1 = operand1 * operand2;
@@ -261,7 +266,16 @@ function processPendingCommand()
             //operand1 = operand1 * operand2;
             operationCompleted = true;
             break;
-            */
+        case '1/x':
+            alert('unknown pendingCommand: ' + pendingCommand);
+            //operand1 = operand1 * operand2;
+            operationCompleted = true;
+            break;
+        case '%':
+            alert('unknown pendingCommand: ' + pendingCommand);
+            //operand1 = operand1 * operand2;
+            operationCompleted = true;
+            break;
         default:
             alert('unknown pendingCommand: ' + pendingCommand);
             break;

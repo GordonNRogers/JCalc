@@ -102,6 +102,10 @@ function processCommand(cmd)
             lastButtonPushWasCommand = true;
             break;
         case '.':
+            if(lastButtonPushWasCommand)
+            {
+                doClear();            
+            }
             if( !displayText.includes('.') )
             {
                 displayText = displayText + '.';

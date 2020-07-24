@@ -16,6 +16,7 @@ function assert(condition, message)
 
 function runUnitTests()
 {
+    // clear everything and start fresh
     onClickButton('CE');
 
     // basic data entry
@@ -30,7 +31,7 @@ function runUnitTests()
     onClickButton('<-');
     assert(displayText=='123', 'test1B');
 
-    // add some sumbers
+    // add some numbers
     onClickButton('+');
     onClickButton(2);
     onClickButton(4);
@@ -47,11 +48,20 @@ function runUnitTests()
     onClickButton(8);
     onClickButton('=');
     assert(displayText=='414.8', 'test2B');
-
-    // clear everything and start fresh
     onClickButton('CE');
+    onClickButton(1);
+    onClickButton(2);
+    onClickButton('.');
+    onClickButton(3);
+    onClickButton('+'); 
+    onClickButton('.');
+    onClickButton(4);
+    onClickButton('=');
+    assert(displayText.startsWith('12.7'), 'test2C'); // use startswith() not == due to floating point issue, fix later
+
 
     // subtraction tests
+    onClickButton('CE');
     onClickButton(4);
     onClickButton(4);
     onClickButton('-');

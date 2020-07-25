@@ -1,17 +1,17 @@
 "use strict";
 
 // vars for memory function
-let memory = 0;
+let strMemory = '';
 
 // vars for the display
-let displayText = '';
-let currentDisplayNagative = false;
-let lastButtonPushWasCommand = false;  // there are some cases when we need to know this, so keep track
+let strDisplayText = '';
+let bCurrentDisplayNagative = false;
+let bLastButtonPushWasCommand = false;  // there are some cases when we need to know this, so keep track
 
 // vars used to complete an operation
-let operand1 = 0;
-let operand2 = 0;
-let pendingCommand = '';
+let strOperand1 = '';
+let strOperand2 = '';
+let strPendingCommand = '';
 
 
 // NOTE:  By convention, the values that are passed in from the HTML elements are numbers
@@ -35,39 +35,38 @@ let pendingCommand = '';
 
     // If the last button pushed was a command and now we have a number being pushed, 
     // clear the display and start adding numbers.
-    if(lastButtonPushWasCommand)
+    if(bLastButtonPushWasCommand)
     {
         doClear();            
     }
 
-    displayText = displayText + num;
+    strDisplayText = strDisplayText + num;
 
-    lastButtonPushWasCommand = false;
+    bLastButtonPushWasCommand = false;
 }
 
 function doClear()
 {
     //console.log("processClear");
-    displayText = '';
+    strDisplayText = '';
 }
 
 function doClearEverything()
 {
     //console.log("processClearEverything");
-    memory = 0;
-    displayText = '';
-    operand1 = 0;
-    operand2 = 0;
-    pendingCommand = '';
+    strMemory = '';
+    strDisplayText = '';
+    strOperand1 = '';
+    strOperand2 = '';
+    strPendingCommand = '';
 }
 
 function updateDisplay()
 {
     //console.log("Update Display:" + displayText);
-    let labelText = displayText;
 
     // use jquery to get the display label by ID and set the text
-    $("#lblValue").text(labelText);
+    $("#lblValue").text(strDisplayText);
 }
 
 function processCommand(cmd)
@@ -79,101 +78,103 @@ function processCommand(cmd)
             // pressing number keys should result in a new value appearing in the display with no pending command,
             // which the default handling already does.  Just call it.
             processPendingCommand();
-            lastButtonPushWasCommand = true;
+            bLastButtonPushWasCommand = true;
             break;
         case '+':
             processPendingCommand();
-            pendingCommand = cmd;
-            lastButtonPushWasCommand = true;
+            strPendingCommand = cmd;
+            bLastButtonPushWasCommand = true;
             break;
         case '-':
             processPendingCommand();
-            pendingCommand = cmd;
-            lastButtonPushWasCommand = true;
+            strPendingCommand = cmd;
+            bLastButtonPushWasCommand = true;
             break;
         case '*':
             processPendingCommand();
-            pendingCommand = cmd;
-            lastButtonPushWasCommand = true;
+            strPendingCommand = cmd;
+            bLastButtonPushWasCommand = true;
             break;
         case '/':
             processPendingCommand();
-            pendingCommand = cmd;
-            lastButtonPushWasCommand = true;
+            strPendingCommand = cmd;
+            bLastButtonPushWasCommand = true;
             break;
         case '.':
-            if(lastButtonPushWasCommand)
+            if(bLastButtonPushWasCommand)
             {
                 doClear();            
             }
-            if( !displayText.includes('.') )
+            if( !strDisplayText.includes('.') )
             {
-                displayText = displayText + '.';
+                strDisplayText = strDisplayText + '.';
             }
-            lastButtonPushWasCommand = false;  // this one if different...it's a command that modifies a number
+            bLastButtonPushWasCommand = false;  // this one if different...it's a command that modifies a number
             break;
         case '+/-':
-            displayText = (Number(displayText) * -1).toString();
-            lastButtonPushWasCommand = false;  // this one if different...it's a command that modifies a number
+            strDisplayText =  (Number(strDisplayText) * -1).toString();
+            bLastButtonPushWasCommand = false;  // this one is different...it's a command that modifies a number
             break;
         case 'C':
             doClear();
-            lastButtonPushWasCommand = true;
+            bLastButtonPushWasCommand = true;
             break;
         case 'CE':
             doClearEverything();
-            lastButtonPushWasCommand = true;
+            bLastButtonPushWasCommand = true;
             break;
         case 'MS':
             processPendingCommand();
-            memory = Number(displayText);
-            lastButtonPushWasCommand = true;
+            strMemory = strDisplayText;
+            bLastButtonPushWasCommand = true;
             break;
         case 'MR':
-            displayText = memory.toString();
-            lastButtonPushWasCommand = true;
+            strDisplayText = strMemory;
+            bLastButtonPushWasCommand = true;
             break;
         case 'M+':
             processPendingCommand();
-            memory += Number(displayText);
-            lastButtonPushWasCommand = true;
+            strMemory = doAdjustedMath(strMemory, '+', strDisplayText);
+            bLastButtonPushWasCommand = true;
             break;
         case 'M-':
             processPendingCommand();
-            memory -= Number(displayText);
-            lastButtonPushWasCommand = true;
+            strMemory = doAdjustedMath(strMemory, '-', strDisplayText);
+            bLastButtonPushWasCommand = true;
             break;
         case '<-':
-            let newText = displayText.slice(0, displayText.length-1);
-            displayText = newText;
-            lastButtonPushWasCommand = false;
+            strDisplayText = strDisplayText.slice(0, strDisplayText.length-1);
+            bLastButtonPushWasCommand = false;
             break;
         case 'x^2':
             processPendingCommand();
-            operand1 = Number(displayText);
-            operand2 = 2;
-            pendingCommand = 'x^y';
+            strOperand1 = strDisplayText;
+            strPendingCommand = 'x^y';
+            strOperand2 = '2';
             processPendingCommand();
-            lastButtonPushWasCommand = true;
+            bLastButtonPushWasCommand = true;
             break;
         case 'x^y':
             processPendingCommand();
-            pendingCommand = cmd;
-            lastButtonPushWasCommand = true;
+            strPendingCommand = cmd;
+            bLastButtonPushWasCommand = true;
             break;
         case '1/x':
             processPendingCommand();
-            displayText = (1 / Number(displayText)).toString();
-            lastButtonPushWasCommand = true;
+            strOperand1 = '1';
+            strPendingCommand = '/';
+            strOperand2 = strDisplayText;
+            processPendingCommand();
+            bLastButtonPushWasCommand = true;
             break;
         case '%':
             processPendingCommand();
-            displayText = (Number(displayText) / 100 ).toString();
-            lastButtonPushWasCommand = true;
+            strDisplayText =  (Number(strDisplayText) / 100).toString();
+            bLastButtonPushWasCommand = true;
             break;
         default:
             alert("Unknown command: " + cmd);
-            lastButtonPushWasCommand = true;
+            bLastButtonPushWasCommand = true;
             break;
     }
  }
@@ -203,61 +204,177 @@ function processPendingCommand()
     //   the current value becomes operand2, the pending operation is complete
 
 
-    let operationCompleted = false;
-    operand2 = Number(displayText);
+    let bOperationCompleted = false;
+    strOperand2 = strDisplayText;
 
-    switch(pendingCommand)
+    switch(strPendingCommand)
     {
         case '':  // no command to process, so just set up for the next one
-            operand1 = operand2;
-            operand2 = 0;
-            pendingCommand = '';
+            strOperand1 = strOperand2;
+            strOperand2 = '';
+            strPendingCommand = '';
             break;
         case '+':
-            // BUG:  12.3 + .4 -->  12.700000000000001
-            // floating point error  --> maybe numbers should be handled in BCD, or multiply by 10's to get rid of decimals, do the math and dived by same factor.
-            operand1 = operand1 + operand2;
-            operationCompleted = true;
+            strOperand1 = doAdjustedMath(strOperand1, '+', strOperand2);
+            bOperationCompleted = true;
             break;
         case '-':
-            operand1 = operand1 - operand2;
-            operationCompleted = true;
+            strOperand1 = doAdjustedMath(strOperand1, '-', strOperand2);
+            bOperationCompleted = true;
             break;
         case '*':
-            operand1 = operand1 * operand2;
-            operationCompleted = true;
+            strOperand1 = (Number(strOperand1)*Number(strOperand2)).toString();
+            bOperationCompleted = true;
             break;
         case '/':
-            if( operand2==0 )  // handle divide by zero
+            if( Number(strOperand2)==0 )  // handle divide by zero
             {
-                displayText = 'Error';
-                pendingCommand = '';
-                operand2 = 0;
+                strDisplayText = 'Error';
+                strPendingCommand = '';
+                strOperand2 = 0;
             }
             else
             {
-                operand1 = operand1 / operand2;
-                operationCompleted = true;
+                strOperand1 = (Number(strOperand1)/Number(strOperand2)).toString();
+                bOperationCompleted = true;
             }
             break;
         case 'x^y':
-            operand1 = Math.pow(operand1,operand2);
-            operationCompleted = true;
+            // rethink:  all doAdjustedMath does is handle moving decimals around for add/subtract operations
+            // maybe bring that code back up here and call something like doEncodedMath for just +- ops.
+            strOperand1 = Math.pow(Number(strOperand1),Number(strOperand2)).toString();
+            bOperationCompleted = true;
             break;
         default:
-            alert('unknown pendingCommand: ' + pendingCommand);
+            alert('unknown pendingCommand: ' + strPendingCommand);
             break;
     }
 
     // get ready for the next command
-    pendingCommand = '';
-    operand2 = 0;
+    strPendingCommand = '';
+    strOperand2 = '';
 
     // if we did something, show the result
-    if(operationCompleted)
+    if(bOperationCompleted)
     {
-        displayText = operand1.toString();
+        strDisplayText = strOperand1;
     }
+}
+
+function digitsAfterDecimalPoint(strValue)
+{
+    let nDigitsAfterDecimal = 0;
+    let nDecimalIndex = indexOfDecimal(strValue);
+
+    if(nDecimalIndex>=0)
+    {
+        nDigitsAfterDecimal = (strValue.length-1) - nDecimalIndex;
+    }
+
+    return nDigitsAfterDecimal;
+}
+
+function indexOfDecimal(strValue)
+{
+    let strLen = strValue.length;
+    let result = -1;    
+    let i=0;
+
+    for(i=0;i<strLen;i++)
+    {
+        if(strValue[i]=='.')
+        {
+            result = i;
+            break;
+        }
+    }
+
+    return result;
+}
+
+function moveDecimalPointRight(strValue, iNumPlaces)
+{
+    // Find the decimal and remove it
+    // Make sure the string has iNumPlaces digits to the right
+    // If we run out of digts, add enough zeros to make it work.
+    let result = strValue;
+    let strLen = strValue.length;
+    let nDecimalIndex = indexOfDecimal(strValue);
+    let nDigitsAfterDecimal = (nDecimalIndex>=0) ? ((strLen-1)-nDecimalIndex) : -1;  // -1 to show there is nothing there
+    let i = nDecimalIndex;
+    let numPlacesMoved = 0;
+    let nPlacesInResult = 0;
+
+
+    // sllice out the decimal point if there s one
+    if(nDigitsAfterDecimal>=0)
+    {
+        let tempResult1 = result.slice(0, nDecimalIndex);
+        let tempResult2 = result.slice(nDecimalIndex+1);
+        result = tempResult1 + tempResult2;
+        nPlacesInResult = tempResult2.length;
+    }
+
+    // Figure out how many zeros we need, build an array, and concat that to result.
+    let numPlacesNeeded = iNumPlaces - nPlacesInResult;
+
+    // add zeros to the end as needed
+    if(numPlacesNeeded>0)
+    {
+        let i=0;
+        for(i=0;i<numPlacesNeeded;i++)
+        {
+            result = result + '0';
+        }
+    }
+
+    return result;
+}
+
+function doAdjustedMath(strOp1, strOperator, strOp2)
+{
+    let result = 0;
+    // special handling for add/subtracxt to avoid floating-point errors
+    // find the max number of decimal points, then multiply everything by a conversion factor
+    // to convert everything to integers.  Do the operation, then divide by the conversion fsactor to
+    // convert it back.
+    // https://www.w3schools.com/js/js_numbers.asp
+    // var x = 0.2 + 0.1;         // x will be 0.30000000000000004
+    // var x = (0.2 * 10 + 0.1 * 10) / 10;       // x will be 0.3
+
+    // find the number of digts we have to move the decimal point to the right
+    let iDigitsDecimalShifted = Math.max(digitsAfterDecimalPoint(strOp1), digitsAfterDecimalPoint(strOp2));
+    // move the decimal point in both operands, adding zeros as neccessary
+    let adjustedVal1 = moveDecimalPointRight(strOp1, iDigitsDecimalShifted);
+    let adjustedVal2 = moveDecimalPointRight(strOp2, iDigitsDecimalShifted);
+
+    // do the operation
+    let tempResult = 0;
+    switch(strOperator)
+    {
+        case '+':
+            tempResult = Number(adjustedVal1) + Number(adjustedVal2);
+            break;
+        case '-':
+            tempResult = Number(adjustedVal1) - Number(adjustedVal2);
+            break;
+        default:
+            alert("Unknown doAdjustedMath operation: " + strOperator);
+            throw '';
+    }
+
+    // correct the result
+    if(iDigitsDecimalShifted>0)
+    {
+        result = tempResult / (10*iDigitsDecimalShifted);
+    }
+    else
+    {
+        result = tempResult;
+    }
+
+    // return the result as a string
+    return result.toString();
 }
 
 

@@ -7,6 +7,7 @@ let strMemory = '';
 let strDisplayText = '';
 let bCurrentDisplayNagative = false;
 let bLastButtonPushWasCommand = false;  // there are some cases when we need to know this, so keep track
+let maxPrecision = 15;  // max number of digits after the decimal point
 
 // vars used to complete an operation
 let strOperand1 = '';
@@ -63,10 +64,11 @@ function doClearEverything()
 
 function updateDisplay()
 {
-    //console.log("Update Display:" + displayText);
-
+    // round the value sent to the display, but leave strDisplayText untouched.
+    let strRoundedDisplay = roundDisplayValue(strDisplayText, maxPrecision);
+    
     // use jquery to get the display label by ID and set the text
-    $("#lblValue").text(strDisplayText);
+    $("#lblValue").text(strRoundedDisplay);
 }
 
 function processCommand(cmd)
@@ -290,6 +292,62 @@ function indexOfDecimal(strValue)
     }
 
     return result;
+}
+
+function roundDisplayValue(strValue, numDecimalPlaces)
+{
+    let strResult = strValue;
+    let nDecimalIndex = indexOfDecimal(strValue);
+
+
+    // do nothing if there isn't a decimal point
+    if(nDecimalIndex>=0)
+    {
+        // split into integer/decimal portions
+        // multiply the decimal portion by 10^numDecimalPlaces and convert to a string
+        // add the string back to the integer portion seperated by a decimal point
+
+        let strPreDecimal = strResult.slice(0, nDecimalIndex);
+        // pull nDigits and nDigits+1 as seperate substrings
+        let startIndex = nDecimalIndex+1;
+        let endIndex = Math.min(strValue.length, nDecimalIndex+numDecimalPlaces+1); // account for the period but don't go past the end
+        let strPostDecimal = strResult.slice(startIndex, endIndex);
+
+
+        // now, we either have nDigits+1 (in this case, round) or we don't (in this case, do nothing)
+        if(strPostDecimal.length>=numDecimalPlaces)
+        {
+            // grab the extra digit
+            startIndex = Math.min(endIndex,strValue.length);
+            endIndex = Math.min(strValue.length, nDecimalIndex+numDecimalPlaces+2); // account for the period and an extra digit, but don't go past the end
+            let strExtraDigit = strResult.slice(startIndex, endIndex);
+            
+            let postDecimalValue = Number(strPostDecimal);
+            let extraDigitValue = Number(strExtraDigit);
+            if(extraDigitValue>=5)
+            {
+                postDecimalValue++;
+
+                // if length of postDecimalValue > numDecimalPlaces, we'll need to increment strPreDecimal
+                let maxValue = Math.pow(10,numDecimalPlaces)-1;
+                if( postDecimalValue >  maxValue) 
+                {
+                    // increment strPreDecimal and take the leading digit away from postDecimalValue
+                    postDecimalValue = postDecimalValue - (maxValue+1);
+                    let preDecimalValue = Number(strPreDecimal)+1;
+                    strPreDecimal = preDecimalValue.toString();
+                }
+            }
+
+            // put it all back together
+            let tempStrResult = strPreDecimal + '.' + postDecimalValue.toString();
+
+            // trim trailing zeros
+            strResult = Number(tempStrResult).toString();
+        }
+    }
+
+    return strResult;
 }
 
 function moveDecimalPointRight(strValue, iNumPlaces)

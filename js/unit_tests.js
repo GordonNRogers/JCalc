@@ -19,6 +19,15 @@ function runUnitTests()
     // clear everything and start fresh
     onClickButton('CE');
 
+    // function test to get it out of the way
+    let strResult = roundDisplayValue('123.45678',4);
+    assert(strResult=='123.4568', 'roundDisplayValue test 1');
+    strResult = roundDisplayValue('123.45',4);
+    assert(strResult=='123.45', 'roundDisplayValue test 1');
+    strResult = roundDisplayValue('88.999999999',4);
+    assert(strResult=='89', 'roundDisplayValue test 3');
+
+
     // basic data entry
     onClickButton(1);
     onClickButton(2);
@@ -57,7 +66,7 @@ function runUnitTests()
     onClickButton('.');
     onClickButton(4);
     onClickButton('=');
-    assert((strDisplayText=='12.7'), 'test2C'); // use startswith() not == due to floating point issue, fix later
+    assert((strDisplayText=='12.7'), 'test2C');
 
 
     // subtraction tests
